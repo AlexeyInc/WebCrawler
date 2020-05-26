@@ -1,0 +1,100 @@
+<form [formGroup]="authService.registerReactiveForm" novalidate (ngSubmit)="register()">
+  <h2 class="text-center text-success">User registration</h2>
+  <hr>
+  <!-- Name -->
+  <div class="form-group">
+    <label>Name:</label>
+    <input class="form-control" name="name" formControlName="username"
+      (blur)="authService.logValidationErrors()"/>
+
+    <div class="alert alert-danger mt-2" *ngIf="authService.formsErrors.username">
+        {{ authService.formsErrors.username }}
+    </div>
+  </div>
+  <!-- Email -->
+  <div class="form-group">
+    <label>Email: </label>
+    <input class="form-control" name="email" formControlName="useremail"
+      (blur)="authService.logValidationErrors()"/>
+
+    <div class="alert alert-danger mt-2" *ngIf="authService.formsErrors.useremail">
+      {{ authService.formsErrors.useremail }}
+    </div>
+  </div>
+
+  <!-- Phone -->
+  <div class="form-group" >
+    <label>Phone number:</label>
+    <div class="form-group" formArrayName="phones" *ngFor="let phone of authService.registerReactiveForm.controls['phones'].controls; let i = index">
+      <div>
+          <input class="form-control" formControlName="{{i}}" 
+          (blur)="authService.logValidationErrors()"/>
+      </div>
+      <div class="alert alert-danger mt-2" *ngIf="authService.formsErrors.phones">
+          {{ authService.formsErrors.phones }}
+      </div>
+    </div>
+     
+    <button class="btn btn-light btn-sm mb-3" (click)="addPhone()" type="button"
+            [disabled]="authService.registerReactiveForm.get('phones').invalid">
+      Add phone
+    </button>
+  </div>
+
+  <!-- Address -->
+  <div class="form-group">
+    <label>Address:</label>
+    <fieldset formGroupName="address">
+      <div class="input-group input-group mb-1">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Country: </span>
+        </div>
+        <input class="form-control" formControlName="country">
+      </div>
+      <div class="input-group input-group mb-2">
+        <div class="input-group-prepend">
+          <span class="input-group-text">City: </span>
+        </div>
+        <input class="form-control" formControlName="city">
+      </div>
+      <!-- <input class="form-control" type="text" formControlName="country">
+      <input class="form-control" type="text" formControlName="city"> -->
+    </fieldset>
+  </div>
+
+  <!-- Passwords -->
+  <div formGroupName="passwords">
+      <div class="form-group">
+          <label>Password:</label>
+          <div>
+            <input class="form-control" name="password" formControlName="password" type="password" 
+              (blur)="authService.logValidationErrors()" />
+        
+            <div class="alert alert-danger mt-2" *ngIf="authService.formsErrors.password">
+              {{ authService.formsErrors.password }}
+            </div>
+          </div> 
+        </div>
+        <div class="form-group">
+          <label>Confirm password:</label>
+          <div>
+            <input class="form-control" name="confirmPassword" formControlName="confirmPassword" type="password"
+              (blur)="authService.logValidationErrors()" />
+  
+            <div class="alert alert-danger mt-2" *ngIf="authService.formsErrors.confirmPassword">
+              {{ authService.formsErrors.confirmPassword }}
+            </div>
+          </div> 
+        </div>
+
+        <div class="alert alert-danger mt-2" *ngIf="authService.formsErrors.passwords">
+          {{ authService.formsErrors.passwords }}
+        </div>
+  </div>
+  
+  <div class="form-group text-center">
+    <button class="btn btn-success" [disabled]="authService.registerReactiveForm.invalid" type="submit"> 
+      Register 
+    </button>
+  </div>
+</form>

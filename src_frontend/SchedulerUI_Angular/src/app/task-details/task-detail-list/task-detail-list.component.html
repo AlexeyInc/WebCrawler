@@ -1,0 +1,21 @@
+<table class="table table-hover">
+   <thead>
+      <tr>
+        <th>Site</th>
+        <th>XPath</th>
+        <th>Time start</th>
+        <th>Frequency</th>
+      </tr>
+   </thead>
+   <tbody>
+     <tr *ngFor="let tsk of taskService.list">
+       <td (click)="populateForm(tsk)">{{tsk.TargetSite}}</td>
+       <td (click)="populateForm(tsk)">{{tsk.XPath}}</td>
+       <td (click)="populateForm(tsk)">{{tsk.TimeStart}}</td>
+       <td (click)="populateForm(tsk)">{{tsk.ExecuteFrequency}}</td>
+       <td>
+         <i class="far fa-trash-alt fa-lg text-danger" (click)="onDelete(tsk.Id)"></i>
+       </td>
+     </tr>
+   </tbody>
+  </table>

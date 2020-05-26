@@ -1,0 +1,85 @@
+<form novalidate [formGroup]="service.taskReactiveForm" (submit)="onReactiveSubmit()">
+    <input type="hidden" formControlName="Id"> 
+    <!-- Site -->
+    <div class="form-group">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <div class="input-group-text bg-white"> 
+            <i class="fas fa-sitemap" 
+                [class.green-icon]="service.validateProperty('TargetSite')" 
+                [class.red-icon]="!service.validateProperty('TargetSite') && 
+                                    service.taskReactiveForm.get('TargetSite').touched"></i>
+          </div>
+        </div>
+        <input name="TargetSite" formControlName="TargetSite" class="form-control"
+          (blur)="service.logValidationErrors()"
+          placeholder="Target Site" required>
+      </div>
+      <div class="alert alert-danger mt-2" *ngIf="service.formsErrors.TargetSite">
+            {{ service.formsErrors.TargetSite }}
+      </div>
+    </div> 
+    <!-- XPath -->
+    <div class="form-group">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <div class="input-group-text bg-white">   
+                    <i class="fas fa-bezier-curve" 
+                        [class.green-icon]="service.validateProperty('XPath')"
+                        [class.red-icon]="!service.validateProperty('XPath') && 
+                                            service.taskReactiveForm.get('XPath').touched"></i>
+                </div>
+            </div>
+        <input name="XPath" formControlName="XPath" class="form-control"
+            (blur)="service.logValidationErrors()"
+            placeholder="XPath" required>
+        </div>
+        <div class="alert alert-danger mt-2" *ngIf="service.formsErrors.XPath">
+            {{ service.formsErrors.XPath }}
+        </div>
+    </div> 
+    <!-- TimeStart -->
+    <div class="form-group">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <div class="input-group-text bg-white"> 
+                        <i class="fas fa-business-time" 
+                            [class.green-icon]="service.validateProperty('TimeStart')" 
+                            [class.red-icon]="!service.validateProperty('TimeStart') && 
+                                                service.taskReactiveForm.get('TimeStart').touched"></i>
+                    </div>
+                </div>
+        <input type="datetime-local" name="TimeStart" formControlName="TimeStart" class="form-control" 
+              (blur)="service.logValidationErrors()" required>
+        </div>
+        <div class="alert alert-danger mt-2" *ngIf="service.formsErrors.TimeStart">
+            {{ service.formsErrors.TimeStart }}
+        </div>
+    </div> 
+    <!-- ExecuteFrequency -->
+    <div class="form-group">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <div class="input-group-text bg-white"> 
+                        <i class="fas fa-stopwatch" 
+                            [class.green-icon]="service.validateProperty('ExecuteFrequency')" 
+                            [class.red-icon]="!service.validateProperty('ExecuteFrequency') && 
+                                                service.taskReactiveForm.get('ExecuteFrequency').touched"></i>
+                        <input type="checkbox" (change)="changeExecuteFrequencyMode()" value="service.taskReactiveForm.get('toggleExecuteFrequency').value" class="ml-3"/>
+                    </div>
+                </div> 
+        <input name="ExecuteFrequency" formControlName="ExecuteFrequency" class="form-control"
+            (blur)="service.logValidationErrors()"
+            placeholder="Execute Frequency: hh:mm:ss">
+        </div>
+        <div class="alert alert-danger mt-2" *ngIf="service.formsErrors.ExecuteFrequency">
+            {{ service.formsErrors.ExecuteFrequency }}
+        </div>
+    </div>
+    <div class="form-group">
+      <button class="btn btn-success btn-lg btn-block" type="submit" [disabled]="!service.taskReactiveForm.valid"><i class="fas fa-database"></i> 
+        {{ service.submitButtonName }}
+      </button>
+      <button class="btn btn-outline-success btn-lg btn-block btn-sm" type="button" (click)="resetReactiveForm()"> Clean </button>
+    </div>
+  </form>
